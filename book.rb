@@ -19,7 +19,7 @@ class Book
 
   def sheet_add(sheet_name = nil)
     if sheet_exist?(sheet_name)
-      $mylogger.info "#{self.class.name}##{__method__} #{sheet_name} exists!"
+      warn "#{self.class.name}##{__method__} #{sheet_name} exists!"
     else
       sheet = @book.worksheets.add
       sheet.name = sheet_name if sheet_name
@@ -29,7 +29,7 @@ class Book
 
   def sheet_copy(src_sheet_name = nil,copied_sheet_name = nil)
     unless src_sheet = sheet_exist?(src_sheet_name)
-      $mylogger.info "#{self.class.name}##{__method__} #{src_sheet_name} sheet not found!"
+      warn "#{self.class.name}##{__method__} #{src_sheet_name} sheet not found!"
     else
       # https://msdn.microsoft.com/JA-JP/library/office/ff837784.aspx
       # 行の最後のsheetの意味は、sheet変数代入時に指定したシート

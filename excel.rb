@@ -26,16 +26,16 @@ class Excel
   def open_book(book = nil)
     if book
       # later implement
-      $mylogger.warn "#{self.class.name}##{__method__} Need to implement"
+      warn "#{self.class.name}##{__method__} Need to implement"
       nil
     else
-      $mylogger.info "#{self.class.name}##{__method__} Select file in \"Open File\" daialog ..."
+      # $mylogger.info "#{self.class.name}##{__method__} Select file in \"Open File\" daialog ..."
 
       # http://officetanaka.net/excel/vba/file/file02.htm
       if file = @@excel.Application.GetOpenFilename("Microsoft Excel,*.xls?")
         @book = @@excel.workbooks.open(file)
       else
-        $mylogger.info "#{self.class.name}##{__method__} file is not specified!"
+        warn "#{self.class.name}##{__method__} file is not specified!"
         nil
       end
     end
@@ -55,7 +55,6 @@ class Excel
   end
 
   def quit
-    $mylogger.info "#{self.class.name}##{__method__} quit"
     @@excel.quit
   end
 

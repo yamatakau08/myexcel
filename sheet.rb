@@ -46,7 +46,7 @@ class Sheet < Excel # to use excel Union method, need excel win32ole object
     if tgtcol
       tgtcol.last
     else
-      $mylogger.error "#{value} is not found in #{@sheet.name}!"
+      warn "#{value} is not found in #{@sheet.name}!"
       nil
     end
   end
@@ -59,7 +59,7 @@ class Sheet < Excel # to use excel Union method, need excel win32ole object
     if tgtcol
       tgtcol[1]
     else
-      $mylogger.error "#{value} is not found in #{@sheet.name}!"
+      warn "#{value} is not found in #{@sheet.name}!"
       nil
     end
   end
