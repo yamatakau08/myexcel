@@ -56,4 +56,7 @@ class Excel
     @@excel.quit
   end
 
+  def self.copy_chartarea
+    @@excel.Application.ActiveChart.ChartArea.Copy
+  end
 end

@@ -49,4 +49,55 @@ class Book
     @book.close
   end
 
+  def fullname
+    @book.FullName
+  end
+
+  def sheet_activate(sheet_name)
+    # https://docs.microsoft.com/ja-jp/office/vba/api/excel.worksheet.activate(method)
+    # same as clik sheet tab
+    if sheet = sheet_exist?(sheet_name)
+      sheet.Activate
+      sheet
+    else
+      warn "#{self.class.name}##{__method__} #{sheet_name} sheet not found!"
+      nil
+    end
+  end
+
+  def copy_range_as_picture(sheet_name,range)
+    # range e.g. "A1:B28"
+    if sheet = sheet_activate(sheet_name)
+      # https://www.moug.net/tech/exvba/0050118.html
+      #@book.ActiveSheet.Range(range).CopyPicture(Appearance: Excel::XlScreen, Format: Excel::XlPicture)
+      sheet.Range(range).CopyPicture(Appearance: Excel::XlScreen, Format: Excel::XlPicture)
+    else
+      warn "#{self.class.name}##{__method__} #{sheet_name} sheet found!"
+      nil
+    end
+  end
+
+  def copy_range(sheet_name,range)
+    # range e.g. "A1:B28"
+    if sheet = sheet_activate(sheet_name)
+      # https://www.moug.net/tech/exvba/0050118.html
+      sheet.Range(range).Copy
+    else
+      warn "#{self.class.name}##{__method__} #{sheet_name} sheet not found!"
+    end
+  end
+
+  def copy_chart(sheet_name,chart_object_no)
+    if sheet = sheet_activate(sheet_name)
+      if chart_object_no <= sheet.ChartObjects.Count
+        sheet.ChartObjects(chart_object_no).Activate
+        Excel.copy_chartarea
+      else
+        warn "#{self.class.name}##{__method__} #{sheet_name} char_object_no: #{chart_object_no} > #{sheet.ChartObjects.Counts}!"
+      end
+    else
+      warn "#{self.class.name}##{__method__} #{sheet_name} sheet not found!"
+    end
+  end
+
 end
