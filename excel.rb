@@ -29,8 +29,6 @@ class Excel
       warn "#{self.class.name}##{__method__} Need to implement"
       nil
     else
-      # $mylogger.info "#{self.class.name}##{__method__} Select file in \"Open File\" daialog ..."
-
       # http://officetanaka.net/excel/vba/file/file02.htm
       if file = @@excel.Application.GetOpenFilename("Microsoft Excel,*.xls?")
         @book = @@excel.workbooks.open(file)
