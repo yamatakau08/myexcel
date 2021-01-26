@@ -19,10 +19,6 @@ class Excel
   def initialize
   end
 
-  def win32ole_instance
-    @@excel
-  end
-
   def open_book(book = nil)
     if book
       # later implement
@@ -58,5 +54,17 @@ class Excel
 
   def self.copy_chartarea
     @@excel.Application.ActiveChart.ChartArea.Copy
+  end
+
+  def self.activewindow
+    @@excel.ActiveWindow
+  end
+
+  def self.union(range1,range2,*range3_30)
+    if range3_30.size >= 1
+      warn "#{self.class.name}##{__method__} need to implement for #{range3_30}"
+    else
+      @@excel.Union(range1,range2)
+    end
   end
 end

@@ -26,7 +26,7 @@ def rgb(red,green,blue)
   red | (green << 8) | (blue << 16)
 end
 
-class Sheet < Excel # to use excel Union method, need excel win32ole object
+class Sheet
 
   attr_reader :name
 
@@ -46,7 +46,7 @@ class Sheet < Excel # to use excel Union method, need excel win32ole object
     if tgtcol
       tgtcol.last
     else
-      warn "#{value} is not found in #{@sheet.name}!"
+      warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
       nil
     end
   end
@@ -59,7 +59,7 @@ class Sheet < Excel # to use excel Union method, need excel win32ole object
     if tgtcol
       tgtcol[1]
     else
-      warn "#{value} is not found in #{@sheet.name}!"
+      warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
       nil
     end
   end
