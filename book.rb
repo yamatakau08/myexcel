@@ -91,7 +91,7 @@ class Book
     if sheet = sheet_activate(sheet_name)
       if chart_object_no <= sheet.ChartObjects.Count
         sheet.ChartObjects(chart_object_no).Activate
-        Excel.copy_chartarea
+        Excel.chartareacopy
       else
         warn "#{self.class.name}##{__method__} #{sheet_name} char_object_no: #{chart_object_no} > #{sheet.ChartObjects.Counts}!"
       end
