@@ -22,14 +22,13 @@ class Excel
     if book
       # later implement
       warn "#{self.class.name}##{__method__} Need to implement"
-      nil
+
     else
       # http://officetanaka.net/excel/vba/file/file02.htm
       if file = @@excel.Application.GetOpenFilename("Microsoft Excel,*.xls?")
         @book = @@excel.workbooks.open(file)
       else
         warn "#{self.class.name}##{__method__} file is not specified!"
-        nil
       end
     end
   end

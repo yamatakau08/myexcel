@@ -10,10 +10,10 @@ class Book
     # if sheet_name exists, return sheet object
     # worksheets does not have map method
     # @sheets = @book.worksheets.map {|sheet| [sheet.name, sheet_object] }.to_h
-    @sheets = {}
     @book.worksheets.each do |sheet_obj|
-      @sheets.store(sheet_obj.name,sheet_obj)
+      (@sheets ||= {}).store(sheet_obj.name,sheet_obj)
     end
+
     @sheets[sheet_name]
   end
 
@@ -61,7 +61,6 @@ class Book
       sheet
     else
       warn "#{self.class.name}##{__method__} #{sheet_name} sheet not found!"
-      nil
     end
   end
 
@@ -73,7 +72,6 @@ class Book
       sheet.Range(range).CopyPicture(Appearance: Excel::XlScreen, Format: Excel::XlPicture)
     else
       warn "#{self.class.name}##{__method__} #{sheet_name} sheet found!"
-      nil
     end
   end
 
