@@ -36,11 +36,12 @@ class Excel
   def visible
     @@excel.Visible = true
 
-    #
-    @@excel.Application.WindowState = ExcelConst::XlNormal
+    # @@excel.Application.WindowState = ExcelConst::XlNormal
+
+    # @@excel.DisplayFullScreen = true
 
     # Excel 表示位置
-    @@excel.Application.Top    = 100
+    @@excel.Application.Top    = 10
     @@excel.Application.Left   = 10
     @@excel.Application.Width  = 640
     @@excel.Application.Height = 640
