@@ -25,8 +25,8 @@ class Excel
 
     else
       # http://officetanaka.net/excel/vba/file/file02.htm
-      if file = @@excel.Application.GetOpenFilename("Microsoft Excel,*.xls?")
-        @book = @@excel.workbooks.open(file)
+      if file = @@excel.Application.GetOpenFilename(FileFilter: "Microsoft Excel,*.xls?")
+        @book = @@excel.Workbooks.Open(FileName: file)
       else
         warn "#{self.class.name}##{__method__} file is not specified!"
       end
@@ -34,7 +34,7 @@ class Excel
   end
 
   def visible
-    @@excel.visible = true
+    @@excel.Visible = true
 
     #
     @@excel.Application.WindowState = ExcelConst::XlNormal
@@ -47,7 +47,7 @@ class Excel
   end
 
   def quit
-    @@excel.quit
+    @@excel.Quit
   end
 
   def self.chartareacopy

@@ -9,8 +9,8 @@ class Book
   def sheet_exist?(sheet_name)
     # if sheet_name exists, return sheet object
     # worksheets does not have map method
-    # @sheets = @book.worksheets.map {|sheet| [sheet.name, sheet_object] }.to_h
-    @book.worksheets.each do |sheet_obj|
+    # @sheets = @book.Worksheets.map {|sheet| [sheet.name, sheet_object] }.to_h
+    @book.Worksheets.each do |sheet_obj|
       (@sheets ||= {}).store(sheet_obj.name,sheet_obj)
     end
 
@@ -21,7 +21,7 @@ class Book
     if sheet_exist?(sheet_name)
       warn "#{self.class.name}##{__method__} #{sheet_name} exists!"
     else
-      sheet = @book.worksheets.add
+      sheet = @book.Worksheets.Add
       sheet.name = sheet_name if sheet_name
       sheet
     end
@@ -46,7 +46,7 @@ class Book
   end
 
   def close
-    @book.close
+    @book.Close
   end
 
   def fullname
