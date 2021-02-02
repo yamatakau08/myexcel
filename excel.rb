@@ -3,7 +3,6 @@
 # explains Excel const e.g xlDown,xlToLeft...
 module ExcelConst end
 
-USE_MSOTHEMECOLOR = false
 # http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/50164
 # https://docs.microsoft.com/ja-jp/office/vba/api/overview/library-reference/enumerations-office
 # arg1 is タイプライブラリ名 Excel VBA を開き
