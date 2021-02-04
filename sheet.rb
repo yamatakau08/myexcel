@@ -5,9 +5,11 @@ class Sheet
   def initialize(sheet)
     @sheet = sheet
     @name  = sheet.name
+    @font  = "Meiryo UI"
+    @size  = 10
 
-    @sheet.Cells.Font.Name = "Meiryo UI"
-    @sheet.Cells.Font.Size = 10
+    @sheet.Cells.Font.Name = @font
+    @sheet.Cells.Font.Size = @size
   end
 
   def acol(value)
@@ -64,6 +66,24 @@ class Sheet
     # http://www.relief.jp/itnote/archives/000482.php
     # VBAの場合は rrggbb の並びではない
     red | (green << 8) | (blue << 16)
+  end
+
+  def make_graph(range_obj,charttype,left: 400,top: 40,height: 428,width: 907,title: nil)
+    # height: 428, width: 907 to fit Power Point slide area height: 15.1cm,width 32.31cm
+    # 17.64cm 500pt -> 1cm = 28.354pt
+
+    range_obj.Select # needed as for chart SetSourceData
+
+    shapes = @sheet.Shapes # 指定されたシートのすべての**Shape** オブジェクトのコレクションです。
+    # AddChart2 ドキュメントにグラフを追加します。 グラフを表す**Shape** オブジェクトを返し、指定されたコレクションに追加します。
+    graph_shape = shapes.AddChart2(Style: -1,XlChartType: charttype,Left: left,Top: top,Width: width,Height: height)
+
+    ## title
+    graph_shape.Chart.ChartTitle.Text = title if title
+    graph_shape.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Name = @font
+    graph_shape.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Size = 14 # @size
+
+    graph_shape # return graph_shape object for onward processing
   end
 
 end
