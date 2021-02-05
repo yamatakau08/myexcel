@@ -68,7 +68,10 @@ class Sheet
     red | (green << 8) | (blue << 16)
   end
 
-  def make_graph(range_obj,charttype,left: 400,top: 40,height: 428,width: 907,title: nil)
+  def make_graph(range_obj,charttype,
+                 left: 400,top: 40,height: 428,width: 907,
+                 title: nil,
+                 xaxistitle:  nil, yaxistitle:  nil)
     # height: 428, width: 907 to fit Power Point slide area height: 15.1cm,width 32.31cm
     # 17.64cm 500pt -> 1cm = 28.354pt
 
@@ -81,9 +84,22 @@ class Sheet
     ## title
     graph_shape.Chart.ChartTitle.Text = title if title
     graph_shape.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Name = @font
-    graph_shape.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Size = 14 # @size
+    # graph_shape.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Size = 14 # 14 default size
 
-    graph_shape # return graph_shape object for onward processing
+    ## axis title
+    # x axis
+    if xaxistitle # Primary
+      graph_shape.Chart.Axes(Type: ExcelConst::XlCategory,AxisGroup: ExcelConst::XlPrimary).HasTitle = true
+      graph_shape.Chart.Axes(Type: ExcelConst::XlCategory,AxisGroup: ExcelConst::XlPrimary).AxisTitle.Characters.Text = xaxistitle
+    end
+
+    # y axis
+    if yaxistitle # Primary
+      graph_shape.Chart.Axes(Type: ExcelConst::XlValue   ,AxisGroup: ExcelConst::XlPrimary).HasTitle = true
+      graph_shape.Chart.Axes(Type: ExcelConst::XlValue   ,AxisGroup: ExcelConst::XlPrimary).AxisTitle.Characters.Text = yaxistitle
+    end
+
+    graph_shape # return graph_shape object for subsequent processing
   end
 
 end
