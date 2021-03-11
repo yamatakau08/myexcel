@@ -13,9 +13,8 @@ class Sheet
   end
 
   def acol(value)
-    # return column alphabaet name of value on first row
-    ecol   = @sheet.UsedRange.Columns.count
-    values = @sheet.Range("A1",@sheet.Cells(1,ecol)).Value.flatten
+    # return column alphabet name of value on first row
+    values = @sheet.UsedRange.Rows(1).Value.first
     tgtcol = values.zip(1..,'A'..).assoc(value) # [["Key",1,"A"],...
     if tgtcol
       tgtcol.last
@@ -26,8 +25,7 @@ class Sheet
 
   def ncol(value)
     # return column number of value on first row
-    ecol   = @sheet.UsedRange.Columns.count
-    values = @sheet.Range("A1",@sheet.Cells(1,ecol)).Value.flatten
+    values = @sheet.UsedRange.Rows(1).Value.first
     tgtcol = values.zip(1..,'A'..).assoc(value) # [["Key",1,"A"],...
     if tgtcol
       tgtcol[1]
