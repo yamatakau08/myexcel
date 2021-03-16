@@ -100,4 +100,12 @@ class Sheet
     graph_shape # return graph_shape object for subsequent processing
   end
 
+  def put_values_in_row(values,start_range_name = "A1")
+    @sheet.Range(start_range_name).Resize(1,values.size).Value = values
+  end
+
+  def put_values_in_column(values,start_range_name = "A1")
+    @sheet.Range(start_range_name).Resize(values.size,1).Value = values
+  end
+
 end
