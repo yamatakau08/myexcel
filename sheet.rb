@@ -105,7 +105,10 @@ class Sheet
   end
 
   def put_values_in_column(values,start_range_name = "A1")
-    @sheet.Range(start_range_name).Resize(values.size,1).Value = values
+    # Note
+    # Since in case "= values", FIRST element of values is set in rows
+    # need to "= values.zip(0..)", 0: dummy data
+    @sheet.Range(start_range_name).Resize(values.size,1).Value = values.zip(0..)
   end
 
 end
