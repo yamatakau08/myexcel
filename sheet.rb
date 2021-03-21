@@ -111,4 +111,41 @@ class Sheet
     @sheet.Range(start_range_name).Resize(values.size,1).Value = values.zip(0..)
   end
 
+  def get_values_in_row(row,range_type = nil)
+    # ranget_type: for future use
+    # 列全体
+    # UsedRange 1列目 -UsedRange最終列 現時点ではこれを対応
+    # UsedRange 指定列-UsedRange最終列
+    # ...
+    @sheet.UsedRange.Rows(row).Value.first
+  end
+
+  def get_values_in_colum(column_name_or_number,range_type = nil)
+    # ranget_type: for future use
+    # 行全体
+    # UsedRange 1行目-UsedRange最終行  現時点ではこれを対応
+    # UsedRange 指定行-UsedRange最終行
+    # ...
+    @sheet.UsedRange.Columns(column_name_or_number).Value.flatten
+  end
+
+  def autofiltermode
+    @sheet.AutoFilterMode
+  end
+
+  def autofilter(sw)
+    # line 1 autofilter
+
+    if autofiltermode
+      @sheet.Rows(1).AutoFilter # Once Un AutoFilter
+      @sheet.Rows(1).AutoFilter if sw # Re AutoFilter
+    else
+      @sheet.Rows(1).AutoFilter if sw
+    end
+  end
+
+  def showalldata
+    # http://club-vba.tokyo/vba-showalldata/
+    @sheet.ShowAllData if @sheet.FilterMode
+  end
 end
