@@ -111,6 +111,13 @@ class Sheet
     @sheet.Range(start_range_name).Resize(values.size,1).Value = values.zip(0..)
   end
 
+  def put_values_in_rowcolumn(values,start_range_name = "A1")
+    # values should be two dimensional array
+    row_size = values.size
+    col_size = values.first.size
+    @sheet.Range(start_range_name).Resize(row_size,col_size).Value = values
+  end
+
   def get_values_in_row(row,range_type = nil)
     # ranget_type: for future use
     # 列全体
@@ -147,5 +154,10 @@ class Sheet
   def showalldata
     # http://club-vba.tokyo/vba-showalldata/
     @sheet.ShowAllData if @sheet.FilterMode
+  end
+
+  def columns_autofit(column = nil)
+    # https://excelwork.info/excel/cellautofit/
+    column ? @sheet.Columns(column).AutoFit : @sheet.Columns.AutoFit
   end
 end
