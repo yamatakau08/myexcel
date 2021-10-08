@@ -1,15 +1,20 @@
 class Book
   attr_reader :name
+  attr_reader :sheets
 
   def initialize(book)
     @book = book
     @name = book.name
+    @book.Worksheets.each do |sheet_obj|
+      (@sheets ||= {}).store(sheet_obj.name,sheet_obj)
+    end
   end
 
   def sheet_exist?(sheet_name)
     # if sheet_name exists, return sheet object
     # worksheets does not have map method
     # @sheets = @book.Worksheets.map {|sheet| [sheet.name, sheet_object] }.to_h
+    # for manually added sheets after open book.
     @book.Worksheets.each do |sheet_obj|
       (@sheets ||= {}).store(sheet_obj.name,sheet_obj)
     end
