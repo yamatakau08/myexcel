@@ -21,8 +21,8 @@ class Excel
   def open_book(book = nil)
     if book
       # later implement
-      warn "#{self.class.name}##{__method__} Need to implement"
-
+      #warn "#{self.class.name}##{__method__} Need to implement"
+      @book = @@excel.Workbooks.Open(book)
     else
       # http://officetanaka.net/excel/vba/file/file02.htm
       if file = @@excel.Application.GetOpenFilename(FileFilter: "Microsoft Excel,*.xls?")
