@@ -160,4 +160,19 @@ class Sheet
     # https://excelwork.info/excel/cellautofit/
     column ? @sheet.Columns(column).AutoFit : @sheet.Columns.AutoFit
   end
+
+  def range2picture(range,pict_width = nil,pict_height = nil,pos_top = nil, pos_left = nil)
+    # make cell range to picture
+    @sheet.Range(range).CopyPicture
+    @sheet.Pictures.Paste.Select
+
+    # resize
+    @sheet.Shapes(1).Width  = pict_width  if pict_width
+    @sheet.Shapes(1).Height = pict_height if pict_height
+
+    # move picture to specified position
+    @sheet.Shapes(1).Top  = pos_top  if pos_top
+    @sheet.Shapes(1).Left = pos_left if pos_left
+  end
+
 end
