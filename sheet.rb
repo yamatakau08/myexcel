@@ -69,7 +69,10 @@ class Sheet
   def make_graph(range_obj,charttype,
                  left: 400,top: 40,height: 428,width: 907,
                  title: nil,
-                 xaxistitle:  nil, yaxistitle:  nil)
+                 xaxistitle:  nil, yaxistitle: nil,
+                 reverseplotorder_value: nil,   # X Axis ExcelConst::XlValue
+                 reverseplotorder_category: nil # Y Axis ExcelConst::XlCategory
+                )
     # height: 428, width: 907 to fit Power Point slide area height: 15.1cm,width 32.31cm
     # 17.64cm 500pt -> 1cm = 28.354pt
 
@@ -77,7 +80,16 @@ class Sheet
 
     shapes = @sheet.Shapes # 指定されたシートのすべての**Shape** オブジェクトのコレクションです。
     # AddChart2 ドキュメントにグラフを追加します。 グラフを表す**Shape** オブジェクトを返し、指定されたコレクションに追加します。
+    # https://learn.microsoft.com/en-us/office/vba/api/excel.shapes.addchart2
+    # Style Use "-1" to get the default style for the chart type specified in XlChartType.
     graph_shape = shapes.AddChart2(Style: -1,XlChartType: charttype,Left: left,Top: top,Width: width,Height: height)
+
+    # reverseplotorder
+    # refer https://www.relief.jp/docs/excel-vba-chart-reverse-plot-order.html
+    # Y Axis is xlcategory, X Axis is xlValue
+    graph_shape.Chart.Axes(Type: ExcelConst::XlCategory).ReversePlotOrder = true if reverseplotorder_category
+
+    graph_shape.Chart.Axes(Type: ExcelConst::XlValue).ReversePlotOrder    = true if reverseplotorder_value
 
     ## title
     graph_shape.Chart.ChartTitle.Text = title if title
