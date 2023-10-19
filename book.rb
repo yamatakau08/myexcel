@@ -58,6 +58,10 @@ class Book
     @book.FullName
   end
 
+  def active_sheet_name
+    @book.activesheet.name
+  end
+
   def sheet_activate(sheet_name)
     # https://docs.microsoft.com/ja-jp/office/vba/api/excel.worksheet.activate(method)
     # same as clik sheet tab
