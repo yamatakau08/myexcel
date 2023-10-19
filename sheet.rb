@@ -20,6 +20,7 @@ class Sheet
       tgtcol.last
     else
       warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
+      nil
     end
   end
 
@@ -31,6 +32,7 @@ class Sheet
       tgtcol[1]
     else
       warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
+      nil
     end
   end
 
