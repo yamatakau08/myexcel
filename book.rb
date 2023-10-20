@@ -107,4 +107,15 @@ class Book
     end
   end
 
+  def sort_sheet(order_sheets_name)
+    # make sheet order in left to right with order_sheets_name
+    sheets_name = []
+    @book.Worksheets.each {|sheet| sheets_name.push(sheet.name)}
+
+    (order_sheets_name & sheets_name).each_with_index do |sheet_name, idx|
+      # refer move https://uxmilk.jp/49043
+      @book.Worksheets(sheet_name).Move(Before: @book.Worksheets(idx+1))
+    end
+  end
+
 end
