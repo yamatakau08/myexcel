@@ -141,7 +141,7 @@ class Sheet
     @sheet.UsedRange.Rows(row).Value.first
   end
 
-  def get_values_in_colum(column_name_or_number,range_type = nil)
+  def get_values_in_column(column_name_or_number,range_type = nil)
     # ranget_type: for future use
     # 行全体
     # UsedRange 1行目-UsedRange最終行  現時点ではこれを対応
