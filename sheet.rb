@@ -12,28 +12,39 @@ class Sheet
     @sheet.Cells.Font.Size = @size
   end
 
-  def acol(value)
-    # return column alphabet name of value on first row
-    values = @sheet.UsedRange.Rows(1).Value.first
-    tgtcol = values.zip(1..,'A'..).assoc(value) # [["Key",1,"A"],...
-    if tgtcol
-      tgtcol.last
-    else
-      warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
-      nil
-    end
+=begin
+  def key2acol(key)
+    # return column alphabet name of value in row
+    @columns_keys[key]&.first || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
 
-  def ncol(value)
-    # return column number of value on first row
+  def key2ncol(key)
+    # return column number of value in row
+    @columns_keys[key]&.last  || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
+  end
+
+  alias_method :acol, :key2acol
+  alias_method :ncol, :key2ncol
+
+  def update_columns_info
+    # get all columns info of first row
+    @columns_info = get_columns_info(row=1)
+    # the following method needs '&.' in case of clean sheet
+    @columns_keys = @columns_info&.map {|column| [column.first, column[1..]] }.to_h
+  end
+=end
+
+  def acol(key,row=1)
+    # Returns the alphabet of the cell name of the cell that matches the key in the specified row.
     values = @sheet.UsedRange.Rows(1).Value.first
-    tgtcol = values.zip(1..,'A'..).assoc(value) # [["Key",1,"A"],...
-    if tgtcol
-      tgtcol[1]
-    else
-      warn "#{self.class.name}##{__method__} #{value} is not found in #{@sheet.name}!"
-      nil
-    end
+    col_alpha = values.zip('A'..).assoc(key)
+    col_alpha&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
+  end
+
+  def ncol(key,row=1)
+    values = @sheet.UsedRange.Rows(1).Value.first
+    col_num = values.zip(1..).assoc(key)
+    col_num&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
 
   ## Excel column name <-> number
@@ -139,6 +150,12 @@ class Sheet
     # UsedRange 指定列-UsedRange最終列
     # ...
     @sheet.UsedRange.Rows(row).Value.first
+  end
+
+  def get_columns_info(row,range_type = nil)
+    # the followings methods need '&.' in case of clean sheet
+    values = @sheet.UsedRange.Rows(row).Value&.first
+    values&.zip('A'..,1..) # [["Key","A",1], ....] coloum data, column name, column no,
   end
 
   def get_values_in_column(column_name_or_number,range_type = nil)
