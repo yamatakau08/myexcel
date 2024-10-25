@@ -36,21 +36,20 @@ class Sheet
 
   def acol(key,row=1)
     # Returns the alphabet of the cell name of the cell that matches the key in the specified row.
-    values = @sheet.UsedRange.Rows(1).Value.first
+    values = @sheet.UsedRange.Rows(rows).Value.first
     col_alpha = values.zip('A'..).assoc(key)
     col_alpha&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
 
   def ncol(key,row=1)
-    values = @sheet.UsedRange.Rows(1).Value.first
+    values = @sheet.UsedRange.Rows(rows).Value.first
     col_num = values.zip(1..).assoc(key)
     col_num&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
 
   ## Excel column name <-> number
 =begin
-  #http://d.hatena.ne.jp/keyesberry/touch/20111229/p1
-  #http://qiita.com/akihyro/items/432f63ad9dc90f415e2d
+  # http://d.hatena.ne.jp/keyesberry/touch/20111229/p1
   def alpha2num(alphabets)
     [*'A'..alphabets].size
   end
