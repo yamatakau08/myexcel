@@ -36,13 +36,13 @@ class Sheet
 
   def acol(key,row=1)
     # Returns the alphabet of the cell name of the cell that matches the key in the specified row.
-    values = @sheet.UsedRange.Rows(rows).Value.first
+    values = @sheet.UsedRange.Rows(row).Value.first
     col_alpha = values.zip('A'..).assoc(key)
     col_alpha&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
 
   def ncol(key,row=1)
-    values = @sheet.UsedRange.Rows(rows).Value.first
+    values = @sheet.UsedRange.Rows(row).Value.first
     col_num = values.zip(1..).assoc(key)
     col_num&.last || (warn "#{self.class.name}##{__method__} #{key} is not found in #{@sheet.name}!")
   end
